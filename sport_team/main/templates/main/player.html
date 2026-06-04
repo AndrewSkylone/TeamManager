@@ -1,8 +1,8 @@
 {% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Профиль пользователя{% endblock %}
+{% block title %}Профіль користувача{% endblock %}
 {% block content %}
-<h2>Профиль пользователя {{ player.username }}</h2>
+<h2>Профіль користувача {{ player.username }}</h2>
 <p>Id: {{ player.pk }}</p>
 {% if user.first_name and user.last_name %}
 <p>Ім'я: {{ player.first_name }}</p>
