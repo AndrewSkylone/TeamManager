@@ -73,6 +73,7 @@ class Player(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=50, verbose_name="Ім'я")
     last_name = models.CharField(max_length=50, verbose_name="Прізвище")
+    username = models.CharField(max_length=150, unique=True, verbose_name="Логін")
 
     class Meta(AbstractUser.Meta):
         verbose_name = 'Гравець'
