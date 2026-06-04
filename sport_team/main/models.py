@@ -94,14 +94,17 @@ class Player(AbstractUser):
         super().save(*args, **kwargs)
 
         if self.avatar and self.avatar.name != 'default-avatar.png':
-            img = Image.open(self.avatar.path)
-            img = img.convert("RGB")
+            try:
+                img = Image.open(self.avatar.path)
+                img = img.convert("RGB")
 
-            # обрізає та масштабує до точного розміру
-            img = ImageOps.fit(
-                img,
-                (300, 300),
-                method=Image.Resampling.LANCZOS
-            )
+                # обрізає та масштабує до точного розміру
+                img = ImageOps.fit(
+                    img,
+                    (300, 300),
+                    method=Image.Resampling.LANCZOS
+                )
 
-            img.save(self.avatar.path, quality=90)
+                img.save(self.avatar.path, quality=90)
+            except:
+                print('Не вдалось обробити зображення')

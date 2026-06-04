@@ -20,7 +20,7 @@ from .models import Player, PlayerRating, Game, Team
 
 
 
-class GameCreateView(CreateView):
+class GameCreateView(LoginRequiredMixin, CreateView):
     model = Game
     template_name = 'main/game/form.html'
     form_class = GameCreateForm

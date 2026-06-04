@@ -3,7 +3,7 @@
 {% block content %}
 {% if future_games %}
 <h1>Заплановані ігри</h1>
-<div class="list-group">
+<div class="list-group mb-5">
     {% for game in future_games %}
     {% include "main/game_card.html" %}
     {% endfor %}

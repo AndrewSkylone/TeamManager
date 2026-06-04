@@ -1,11 +1,3 @@
 .root {
     font-size: larger;
 }
-.dropdown-menu {
-    max-width: 100vw;
-}
-
-.dropdown-item {
-    white-space: normal;
-    word-wrap: break-word;
-}
