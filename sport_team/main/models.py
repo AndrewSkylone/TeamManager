@@ -21,7 +21,7 @@ class Game(models.Model):
     teams_num = models.IntegerField(verbose_name='Кількість команд', validators=[
             MinValueValidator(2),
         ])
-    players = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Гравці', related_name='games')
+    players = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name='Гравці', related_name='games', blank=True)
 
     def __str__(self):
         dt = self.created_at.strftime('%m-%d-%Y')

@@ -10,6 +10,8 @@ from django.contrib.auth import login
 from django.shortcuts import render
 from django.contrib import messages
 from django.db.models import Avg
+from django.utils import timezone
+from django.db.models import Q
 import math
 
 from .forms import ProfileEditForm, RegisterForm, PlayerRatingForm, GameCreateForm
@@ -198,5 +200,12 @@ def player(request, pk: int):
 
 @login_required
 def index(request):
-    context = {}
+    user_games = Game.objects.filter(
+        Q(players=request.user) |
+        Q(organizer=request.user)
+    ).distinct()
+    last_games = user_games.filter(starts_at__lt=timezone.now()).order_by('-starts_at')[:5]
+    future_games = user_games.filter(starts_at__gt=timezone.now()).order_by('-starts_at')[:5]
+
+    context = {'future_games': future_games, 'last_games': last_games}
     return render(request, 'main/index.html', context)

@@ -49,6 +49,10 @@
             </div>
         </nav>
         <div class="row">
+            <nav class="col-md-auto nav flex-column bg-light">
+                <a class="nav-link" href="{% url 'main:players' %}">Гравці</a>
+                <a class="nav-link" href="{% url 'main:game_create' %}">Створити гру</a>
+            </nav>
 
             <main class="col py-2">
                 {% bootstrap_messages %}

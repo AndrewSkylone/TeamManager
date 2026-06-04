@@ -1,5 +1,20 @@
 {% extends 'layout/basic.html' %}
 
 {% block content %}
-<center><h1>Головна сторінка</h1></center>
+{% if future_games %}
+<h1>Заплановані ігри</h1>
+<div class="list-group">
+    {% for game in future_games %}
+    {% include "main/game_card.html" %}
+    {% endfor %}
+</div>
+{% endif %}
+{% if last_games %}
+<h1>Зіграні ігри</h1>
+<div class="list-group">
+    {% for game in last_games %}
+    {% include "main/game_card.html" %}
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}
