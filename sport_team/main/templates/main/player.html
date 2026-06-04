@@ -8,7 +8,7 @@
 <p>Ім'я: {{ player.first_name }}</p>
 <p>Прізвище: {{ player.last_name }}</p>
 {% endif %}
-<img src="{{ player.avatar.url }}" width="200" height="200">
+<img src="{{ player.avatar.url }} " class="rounded-circle me-3" width="200" height="200">
 <form method="post" id="my_form">
     {% csrf_token %}
 
