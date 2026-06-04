@@ -1,0 +1,55 @@
+{% extends 'layout/basic.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Команди гри {{ game.pk }}{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Розподіл команд</h2>
+
+<div class="row">
+
+    ```
+    {% for team in teams %}
+    <div class="col">
+
+        <div class="card h-100">
+
+            <div class="card-header text-center">
+                <h4>Команда {{ team.id }}</h4>
+
+                <div class="badge bg-success">
+                    Загальний рейтинг: {{ team.total_rating|floatformat:1 }}
+                </div>
+            </div>
+
+            <ul class="list-group list-group-flush">
+
+                {% for player in team.players %}
+                <li class="list-group-item">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <a href="{% url 'main:player' pk=player.pk %}">
+                            {{ player.username }}
+                        </a>
+
+                        <span class="badge bg-primary">
+                            {{ player.average_rating|default:0|floatformat:1 }}
+                        </span>
+
+                    </div>
+
+                </li>
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+    </div>
+    {% endfor %}
+    ```
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout/basic.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Всі гравці{% endblock %}
+{% block content %}
+{% for player in players %}
+    <p> <a href="{% url 'main:player' player.pk %}">{{ player.username }}
+    {% if player.first_name and player.last_name %}
+        ({{ player.first_name }} {{ player.last_name }})
+    {% endif %}
+    </a></p>
+{% endfor %}
+{% endblock %}

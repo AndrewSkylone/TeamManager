@@ -1,0 +1,47 @@
+{% extends 'layout/basic.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Гра {{ game.pk }}{% endblock %}
+{% block content %}
+<h2>Game ID: {{ game.pk }}</h2>
+<p>Місце: {{ game.place }}</p>
+<p>Час: {{ game.starts_at }}</p>
+<h2>Гравці</h2>
+<div class="list-group">
+    {% for player in game.players.all %}
+    <a href="{% url 'main:player' pk=player.pk %}" class="list-group-item list-group-item-action">
+
+        <div class="d-flex align-items-center">
+
+            {% if player.avatar %}
+            <img src="{{ player.avatar.url }}" class="rounded-circle me-3" width="50" height="50">
+            {% endif %}
+
+            <div>
+                <div>{{ player.username }}</div>
+                <small class="text-muted">
+                    {{ player.first_name }} {{ player.last_name }}
+                </small>
+            </div>
+
+            {% if player.avg_rating %}
+            <div>
+                ⭐ {{ player.avg_rating|floatformat:1 }}
+            </div>
+            {% endif %}
+
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<div>
+    {% if game.organizer.pk == user.pk %}
+    <a class="btn btn-primary" href="{% url 'main:game_edit' pk=game.pk %}">
+        Змінити дані
+    </a>
+    {% endif %}
+    <a class="btn btn-success" href="{% url 'main:game_teams' pk=game.pk %}">
+        Розподілити на команди
+    </a>
+</div>
+
+{% endblock %}

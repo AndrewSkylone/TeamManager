@@ -1,0 +1,21 @@
+{% extends 'layout/basic.html' %}
+{% load django_bootstrap5 %}
+{% block title %}Профиль пользователя{% endblock %}
+{% block content %}
+<h2>Профиль пользователя {{ player.username }}</h2>
+<p>Id: {{ player.pk }}</p>
+{% if user.first_name and user.last_name %}
+<p>Ім'я: {{ player.first_name }}</p>
+<p>Прізвище: {{ player.last_name }}</p>
+{% endif %}
+<img src="{{ player.avatar.url }}" width="200" height="200">
+<form method="post" id="my_form">
+    {% csrf_token %}
+
+    {{ rating_form.rating }}
+
+    <button type="submit" class="btn btn-primary">
+        Оцінити
+    </button>
+</form>
+{% endblock %}

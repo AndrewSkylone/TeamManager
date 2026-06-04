@@ -1,0 +1,60 @@
+{% load django_bootstrap5 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>{% block title %}Головна{% endblock %} - Спорт менеджер</title>
+        {% bootstrap_css %}
+        <link rel="stylesheet" type="text/css"
+              href="{% static 'main/style.css' %}">
+        {% bootstrap_javascript %}
+    </head>
+    <body class="container-fluid">
+        <nav class="row navbar navbar-expand-md bg-light">
+            <div class="col container">
+                <a class="navbar-brand"
+                   href="{% url 'main:index' %}">Головна</a>
+                <button class="navbar-toggler" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end"
+                     id="navbarNav">
+                    <div class="navbar-nav">
+                        {% if user.is_authenticated %}
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               data-bs-toggle="dropdown" href="#">Профіль</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="{% url 'main:profile' %}">Мій 
+                                   профіль</a>
+                                <a class="dropdown-item" href="{% url 'main:profile_edit' %}">
+                                   Змінити особисті дані</a>
+                                <a class="dropdown-item" href="{% url 'main:password_edit' %}">
+                                   Змінити пароль</a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" href="{% url 'main:logout' %}">
+                                   Вийти</a>
+                            </div>
+                        </div>
+                        {% else %}
+                        <a class="nav-link" href="{% url 'main:register' %}">Реєстрація</a>
+                        <a class="nav-link" href="{% url 'main:login' %}">Вхід</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+
+            <main class="col py-2">
+                {% bootstrap_messages %}
+                {% block content %}
+                {% endblock %}
+            </main>
+        </div>
+    </body>
+</html>
