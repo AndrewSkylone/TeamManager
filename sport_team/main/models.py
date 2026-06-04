@@ -71,8 +71,8 @@ def player_avatar_path(instance: 'Player', filename: str):
 class Player(AbstractUser):
     avatar = models.ImageField(upload_to=player_avatar_path, blank=True, default='avatars/default.png', verbose_name='Аватар')
     created_at = models.DateTimeField(auto_now_add=True)
-    first_name = models.CharField(max_length=50, verbose_name="Ім'я")
-    last_name = models.CharField(max_length=50, verbose_name="Прізвище")
+    first_name = models.CharField(max_length=50, verbose_name="Ім'я", blank=True)
+    last_name = models.CharField(max_length=50, verbose_name="Прізвище", blank=True)
     username = models.CharField(max_length=150, unique=True, verbose_name="Логін")
 
     class Meta(AbstractUser.Meta):
