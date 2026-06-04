@@ -8,6 +8,8 @@
     {% include "main/game_card.html" %}
     {% endfor %}
 </div>
+{% else %}
+<h1>У вас немає запланованих ігор</h1>
 {% endif %}
 {% if last_games %}
 <h1>Зіграні ігри</h1>
@@ -16,5 +18,7 @@
     {% include "main/game_card.html" %}
     {% endfor %}
 </div>
+{% else %}
+<h1>Ви ще не зіграли жодної гри</h1>
 {% endif %}
 {% endblock %}
