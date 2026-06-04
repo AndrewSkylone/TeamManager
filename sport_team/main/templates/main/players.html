@@ -2,9 +2,11 @@
 {% load django_bootstrap5 %}
 {% block title %}Всі гравці{% endblock %}
 {% block content %}
-{% for player in players %}
+<div class="list-group">
+    {% for player in players %}
     <div class="col-md-6 col-lg-2 mb-2">
         {% include "main/player_card.html" %}
     </div>
-{% endfor %}
+    {% endfor %}
+</div>
 {% endblock %}
