@@ -3,6 +3,8 @@
 {% block title %}Всі гравці{% endblock %}
 {% block content %}
 {% for player in players %}
-    {% include "main/player_card.html" %}
+    <div class="col-md-6 col-lg-2 mb-2">
+        {% include "main/player_card.html" %}
+    </div>
 {% endfor %}
 {% endblock %}
