@@ -1,11 +1,11 @@
 {% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Правка личных данных{% endblock %}
+{% block title %}Правка особистих даних{% endblock %}
 {% block content %}
-<h2>Правка личных данных пользователя {{ user.username }}</h2>
+<h2>Правка особистих даних користувача {{ user.username }}</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}
-    {% bootstrap_button 'Сохранить' %}
+    {% bootstrap_button 'Зберегти' %}
 </form>
 {% endblock %}

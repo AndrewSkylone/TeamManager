@@ -1,16 +1,16 @@
 {% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Вход{% endblock %}
+{% block title %}Вхід{% endblock %}
 {% block content %}
-<h2>Вход</h2>
+<h2>Вхід</h2>
 {% if user.is_authenticated %}
-<p>Вы уже выполнили вход.</p>
+<p>Ви уже виконали вхід.</p>
 {% else %}
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}
     <input type="hidden" name="next" value="{{ next }}">
-    {% bootstrap_button 'Войти' %}
+    {% bootstrap_button 'Увійти' %}
 </form>
 {% endif %}
 {% endblock %}
