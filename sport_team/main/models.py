@@ -88,11 +88,13 @@ class Player(AbstractUser):
         return result['avg']
     
     def save(self, *args, **kwargs):
+        if not self.avatar:
+            self.avatar = 'default-avatar.png'
+
         super().save(*args, **kwargs)
 
-        if self.avatar and not self.avatar.path.endswith('default-avatar.png'):
+        if self.avatar and self.avatar.name != 'default-avatar.png':
             img = Image.open(self.avatar.path)
-
             img = img.convert("RGB")
 
             # обрізає та масштабує до точного розміру
