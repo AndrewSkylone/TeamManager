@@ -196,6 +196,7 @@ def player(request, pk: int):
     context = {'player': player, 'rating_form': form}
     return render(request, 'main/player.html', context=context)
 
+@login_required
 def index(request):
     context = {}
     return render(request, 'main/index.html', context)

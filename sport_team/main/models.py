@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from pathlib import Path
 from typing import Optional
+from PIL import Image, ImageOps
 
 
 class Game(models.Model):
@@ -69,7 +70,7 @@ def player_avatar_path(instance: 'Player', filename: str):
 
 
 class Player(AbstractUser):
-    avatar = models.ImageField(upload_to=player_avatar_path, blank=True, default='avatars/default.png', verbose_name='Аватар')
+    avatar = models.ImageField(upload_to=player_avatar_path, blank=True, default='default-avatar.png', verbose_name='Аватар')
     created_at = models.DateTimeField(auto_now_add=True)
     first_name = models.CharField(max_length=50, verbose_name="Ім'я", blank=True)
     last_name = models.CharField(max_length=50, verbose_name="Прізвище", blank=True)
@@ -85,3 +86,20 @@ class Player(AbstractUser):
         )
 
         return result['avg']
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.avatar and not self.avatar.path.endswith('default-avatar.png'):
+            img = Image.open(self.avatar.path)
+
+            img = img.convert("RGB")
+
+            # обрізає та масштабує до точного розміру
+            img = ImageOps.fit(
+                img,
+                (300, 300),
+                method=Image.Resampling.LANCZOS
+            )
+
+            img.save(self.avatar.path, quality=90)
