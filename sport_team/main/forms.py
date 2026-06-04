@@ -31,8 +31,8 @@ class RegisterForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
-    first_name = forms.CharField(required=True, label="Ім'я")
-    last_name = forms.CharField(required=True, label="Прізвище")
+    # first_name = forms.CharField(required=True, label="Ім'я")
+    # last_name = forms.CharField(required=True, label="Прізвище")
 
     class Meta:
         model = Player
