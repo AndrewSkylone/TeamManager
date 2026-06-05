@@ -1,11 +1,26 @@
-{% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Реєстрація{% endblock %}
-{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Реєстрація</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript %}
+</head>
+
+<body class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-4">
 <h2>Реєстрація нового користувача</h2>
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}
     {% bootstrap_button 'Зареєструватися' %}
 </form>
-{% endblock %}
+    </div>
+</body>
+</html>

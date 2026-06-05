@@ -1,16 +1,35 @@
-{% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Вхід{% endblock %}
-{% block content %}
-<h2>Вхід</h2>
-{% if user.is_authenticated %}
-<p>Ви уже виконали вхід.</p>
-{% else %}
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
-    <input type="hidden" name="next" value="{{ next }}">
-    {% bootstrap_button 'Увійти' %}
-</form>
-{% endif %}
-{% endblock %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Вхід</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript %}
+</head>
+
+<body class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-lg-4">
+        <h2>Вхід</h2>
+        {% if user.is_authenticated %}
+        <p>Ви уже виконали вхід.</p>
+        {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% bootstrap_button 'Увійти' button_class='btn-success' %}
+            <a class="btn btn-primary flex-fill" href="{% url 'main:register' %}">
+                Реєстрація
+            </a>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
