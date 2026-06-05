@@ -2,8 +2,26 @@
 {% load django_bootstrap5 %}
 {% block title %}Гра {{ game.pk }}{% endblock %}
 {% block content %}
-<p>Місце: {{ game.place }}</p>
-<p>Час: {{ game.starts_at }}</p>
+<p><span class="fw-bold">
+    Місце:
+    </span>
+    {{ game.place }}
+</p>
+<p><span class="fw-bold">
+    Дата:
+    </span>
+    {{ game.starts_at|date:"d.m.Y" }}
+</p>
+<p><span class="fw-bold">
+    Час:
+    </span>
+    {{ game.starts_at|date:"H:i" }}
+</p>
+<p><span class="fw-bold">
+    Організатор:
+    </span>
+    <a href="{% url 'main:player' pk=game.organizer.pk %}" class="text-decoration-none">{{ game.organizer }}</a>
+</p>
 <h2>Гравці</h2>
 <div class="list-group">
     {% for player in game.players.all %}
