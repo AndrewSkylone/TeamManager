@@ -18,6 +18,14 @@ from .forms import ProfileEditForm, RegisterForm, PlayerRatingForm, GameCreateFo
 from .models import Player, PlayerRating, Game, Team
 
 
+#TEST
+def test(request):
+    return render(request, 'main/test.html')
+def test1(request):
+    print('heLLLLO')
+    from django.http import HttpResponse
+    return HttpResponse("<h3>Привіт від Django!</h3>")
+
 
 
 class GameCreateView(LoginRequiredMixin, CreateView):
@@ -121,7 +129,7 @@ class PlayerLoginView(LoginView):
 
 
 class PlayerLogoutView(LogoutView):
-    pass
+    next_page = reverse_lazy('main:index')
 
 
 @login_required

@@ -1,24 +1,7 @@
 {% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
 {% block title %}Профіль користувача{% endblock %}
-{% block content %}
-
-<body class="container-fluid">
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <div class="navbar-nav">
-            {% if user.is_authenticated %}
-            <div class="nav-item dropdown">
-                <div class="dropdown-menu">
-                    <a class="nav-link" href="{% url 'main:profile_edit' %}">Змінити особисті дані</a>
-                    <a class="nav-link" href="{% url 'main:profile_edit' %}">Змінити пароль</a>
-                    <a class="nav-link" href="{% url 'main:logout' %}">Вийти</a>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-</body>
-    
+{% block content %}    
 <div class="card shadow-sm mx-auto" style="max-width: 500px;">
     <div class="card-body text-center">
 

@@ -3,62 +3,65 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}Головна{% endblock %} - Менеджер команд</title>
-        {% bootstrap_css %}
-        <link rel="stylesheet" type="text/css"
-              href="{% static 'main/style.css' %}">
-        {% bootstrap_javascript %}
-    </head>
-    <body class="container-fluid">
-        <nav class="row navbar navbar-expand-md bg-light">
-            <div class="col container">
-                <a class="navbar-brand"
-                   href="{% url 'main:index' %}">Головна</a>
-                <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end"
-                     id="navbarNav">
-                    <div class="navbar-nav">
-                        {% if user.is_authenticated %}
-                        <div class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                               data-bs-toggle="dropdown" href="#">Профіль</a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" href="{% url 'main:profile' %}">Мій 
-                                   профіль</a>
-                                <a class="dropdown-item" href="{% url 'main:profile_edit' %}">
-                                   Змінити особисті дані</a>
-                                <a class="dropdown-item" href="{% url 'main:password_edit' %}">
-                                   Змінити пароль</a>
-                                <hr class="dropdown-divider">
-                                <a class="dropdown-item" href="{% url 'main:logout' %}">
-                                   Вийти</a>
-                            </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}Головна{% endblock %} - Менеджер команд</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript %}
+    <script src="https://unpkg.com/htmx.org@2.0.7"></script>
+</head>
+
+<body class="container-fluid">
+    <nav class="row navbar navbar-expand-md bg-light">
+        <div class="col container">
+            <a class="navbar-brand" href="{% url 'main:index' %}">Головна</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="navbar-nav">
+                    {% if user.is_authenticated %}
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Профіль</a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="{% url 'main:profile' %}">Мій
+                                профіль</a>
+                            <a class="dropdown-item" href="{% url 'main:profile_edit' %}">
+                                Змінити особисті дані</a>
+                            <a class="dropdown-item" href="{% url 'main:password_edit' %}">
+                                Змінити пароль</a>
+                            <hr class="dropdown-divider">
+                            <form method="post" action="{% url 'main:logout' %}">
+                                {% csrf_token %}
+                                <button style="border:None;background: None;" class="dropdown-item" type="submit">
+                                    Вийти
+                                </button>
+                            </form>
                         </div>
-                        {% else %}
-                        <a class="nav-link" href="{% url 'main:register' %}">Реєстрація</a>
-                        <a class="nav-link" href="{% url 'main:login' %}">Вхід</a>
-                        {% endif %}
                     </div>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'main:register' %}">Реєстрація</a>
+                    <a class="nav-link" href="{% url 'main:login' %}">Вхід</a>
+                    {% endif %}
                 </div>
             </div>
-        </nav>
-        <div class="row">
-            <nav class="col-md-auto nav flex-column bg-light">
-                <a class="nav-link" href="{% url 'main:players' %}">Гравці</a>
-                <a class="nav-link" href="{% url 'main:game_create' %}">Створити гру</a>
-            </nav>
-
-            <main class="col py-2">
-                {% bootstrap_messages %}
-                {% block content %}
-                {% endblock %}
-            </main>
         </div>
-    </body>
+    </nav>
+    <div class="row">
+        <nav class="col-md-auto nav flex-column bg-light">
+            <a class="nav-link" href="{% url 'main:players' %}">Гравці</a>
+            <a class="nav-link" href="{% url 'main:game_create' %}">Створити гру</a>
+        </nav>
+
+        <main class="col py-2">
+            {% bootstrap_messages %}
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+
 </html>
