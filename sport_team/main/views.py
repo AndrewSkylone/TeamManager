@@ -123,69 +123,28 @@ class PlayerLogoutView(LogoutView):
     next_page = reverse_lazy('main:index')
 
 
-@login_required
 def game_teams(request, pk: int):
     game = get_object_or_404(Game, pk=pk)
     players = game.players.annotate(average_rating=Avg('received_ratings__rating')).order_by('-average_rating').all()
 
     max_players_in_team = math.ceil(min(len(players), game.max_players) / game.teams_num)
-    teams_players = [[] for i in range(game.teams_num)]
+    teams = [{'players': [], 'avg_ratings': [], 'total_rating': 0} for _ in range(game.teams_num)]
 
     for player in players[:game.max_players]:
         team_i = None
-        min_rating = None
+        min_team_rating = None
         
-        for i, players in enumerate(teams_players):
-            if len(players) >= max_players_in_team:
+        for i, team in enumerate(teams):
+            if len(team['players']) >= max_players_in_team:
                 continue
 
-            rating = sum(p.average_rating or 0 for p in players) if players else 0
-            if min_rating is None or rating < min_rating:
+            if min_team_rating is None or team['total_rating'] < min_team_rating:
                 team_i = i
-                min_rating = rating
+                min_team_rating = team['total_rating']
 
-        teams_players[team_i].append(player)
-
-    teams = []
-
-    for i, players in enumerate(teams_players):
-        teams.append({
-            'id': i + 1,
-            'players': players,
-            'avg_rating': statistics.mean(p.avg_rating or 0 for p in players) if players else 0,
-            'total_rating': sum(p.avg_rating or 0 for p in players) if players else 0
-        })
-
-    context = {'teams': teams}
-    return render(request, 'main/game/teams.html', context=context)
-
-def game_teams_OLD(request, pk: int):
-    game = get_object_or_404(Game, pk=pk)
-    players = game.players.annotate(average_rating=Avg('received_ratings__rating')).order_by('-average_rating').all()
-
-    max_players_in_team = math.ceil(min(len(players), game.max_players) / game.teams_num)
-    teams_players = [[] for i in range(game.teams_num)]
-    teams_totals = [0] * game.teams_num
-
-    for player in players[:game.max_players]:
-        for i in range(game.teams_num):
-            is_not_enough_players = len(teams_players[i]) < max_players_in_team
-            is_min_team_rating = teams_totals[i] <= min(teams_totals)
-
-            if is_not_enough_players and is_min_team_rating:
-                teams_players[i].append(player)
-                teams_totals[i] += player.average_rating or 0
-                break
-
-    teams = []
-
-    for i in range(game.teams_num):
-        teams.append({
-            'id': i + 1,
-            'players': teams_players[i],
-            'avg_rating': teams_totals[i] / len(teams_players[i]),
-            'total_rating': teams_totals[i]
-        })
+        teams[team_i]['players'].append(player)
+        teams[team_i]['avg_ratings'].append(player.average_rating)
+        teams[team_i]['total_rating'] += player.average_rating
 
     context = {'teams': teams}
     return render(request, 'main/game/teams.html', context=context)

@@ -15,7 +15,7 @@
         <div class="card h-100">
 
             <div class="card-header text-center">
-                <h4>Команда {{ team.id }}</h4>
+                <h4>Команда {{ forloop.counter }}</h4>
 
                 <div class="badge bg-success">
                     Загальний рейтинг: {{ team.total_rating|floatformat:1 }}
