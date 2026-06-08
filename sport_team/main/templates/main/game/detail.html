@@ -47,7 +47,7 @@
             {% if game.organizer.pk == user.pk %}
             <form method="post" action="{% url 'main:game_remove_player' game.pk player.pk %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger m-2">✕</button>
+                <button type="submit" class="btn btn-danger m-2 opacity-50">✕</button>
             </form>
             {% endif %}
         </div>
