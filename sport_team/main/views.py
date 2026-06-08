@@ -152,8 +152,8 @@ def game_teams(request, pk: int):
         teams.append({
             'id': i + 1,
             'players': players,
-            'avg_rating': statistics.mean(p.avg_rating for p in players) if players else 0,
-            'total_rating': sum(p.avg_rating for p in players) if players else 0
+            'avg_rating': statistics.mean(p.avg_rating or 0 for p in players) if players else 0,
+            'total_rating': sum(p.avg_rating or 0 for p in players) if players else 0
         })
 
     context = {'teams': teams}
