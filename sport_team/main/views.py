@@ -12,20 +12,11 @@ from django.contrib import messages
 from django.db.models import Avg
 from django.utils import timezone
 from django.db.models import Q
+import statistics
 import math
 
 from .forms import ProfileEditForm, RegisterForm, PlayerRatingForm, GameCreateForm
 from .models import Player, PlayerRating, Game, Team
-
-
-#TEST
-def test(request):
-    return render(request, 'main/test.html')
-def test1(request):
-    print('heLLLLO')
-    from django.http import HttpResponse
-    return HttpResponse("<h3>Привіт від Django!</h3>")
-
 
 
 class GameCreateView(LoginRequiredMixin, CreateView):
@@ -134,6 +125,41 @@ class PlayerLogoutView(LogoutView):
 
 @login_required
 def game_teams(request, pk: int):
+    game = get_object_or_404(Game, pk=pk)
+    players = game.players.annotate(average_rating=Avg('received_ratings__rating')).order_by('-average_rating').all()
+
+    max_players_in_team = math.ceil(min(len(players), game.max_players) / game.teams_num)
+    teams_players = [[] for i in range(game.teams_num)]
+
+    for player in players[:game.max_players]:
+        team_i = None
+        min_rating = None
+        
+        for i, players in enumerate(teams_players):
+            if len(players) >= max_players_in_team:
+                continue
+
+            rating = sum(p.average_rating for p in players) if players else 0
+            if min_rating is None or rating < min_rating:
+                team_i = i
+                min_rating = rating
+
+        teams_players[team_i].append(player)
+
+    teams = []
+
+    for i, players in enumerate(teams_players):
+        teams.append({
+            'id': i + 1,
+            'players': players,
+            'avg_rating': statistics.mean(p.avg_rating for p in players) if players else 0,
+            'total_rating': sum(p.avg_rating for p in players) if players else 0
+        })
+
+    context = {'teams': teams}
+    return render(request, 'main/game/teams.html', context=context)
+
+def game_teams_OLD(request, pk: int):
     game = get_object_or_404(Game, pk=pk)
     players = game.players.annotate(average_rating=Avg('received_ratings__rating')).order_by('-average_rating').all()
 
