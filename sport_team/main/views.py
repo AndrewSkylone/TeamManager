@@ -131,6 +131,7 @@ def game_teams(request, pk: int):
     teams = [{'players': [], 'avg_ratings': [], 'total_rating': 0} for _ in range(game.teams_num)]
 
     for player in players[:game.max_players]:
+        player_avg_rating = player.average_rating or 0
         team_i = None
         min_team_rating = None
         
@@ -143,8 +144,8 @@ def game_teams(request, pk: int):
                 min_team_rating = team['total_rating']
 
         teams[team_i]['players'].append(player)
-        teams[team_i]['avg_ratings'].append(player.average_rating)
-        teams[team_i]['total_rating'] += player.average_rating
+        teams[team_i]['avg_ratings'].append(player_avg_rating)
+        teams[team_i]['total_rating'] += player_avg_rating
 
     context = {'teams': teams}
     return render(request, 'main/game/teams.html', context=context)
