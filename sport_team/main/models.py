@@ -63,6 +63,9 @@ class PlayerRating(models.Model):
             )
         ]
 
+    def __str__(self) -> str:
+        return f"{self.from_player} -> {self.to_player}"
+
 
 def player_avatar_path(instance: 'Player', filename: str):
     ext = Path(filename).suffix
@@ -108,3 +111,6 @@ class Player(AbstractUser):
                 img.save(self.avatar.path, quality=90)
             except:
                 print('Не вдалось обробити зображення')
+    
+    def __str__(self):
+        return self.username

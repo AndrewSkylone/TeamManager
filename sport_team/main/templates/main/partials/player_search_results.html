@@ -1,0 +1,7 @@
+<div class="list-group">
+    {% for player in players.all %}
+        <a class="list-group-item list-group-item-action" href="{% url 'main:game_add_player' game.pk player.pk %}">
+        {% include "main/player_card.html" %}
+        </a>
+    {% endfor %}
+</div>

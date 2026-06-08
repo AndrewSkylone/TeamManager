@@ -12,7 +12,6 @@ from django.contrib import messages
 from django.db.models import Avg
 from django.utils import timezone
 from django.db.models import Q
-import statistics
 import math
 
 from .forms import ProfileEditForm, RegisterForm, PlayerRatingForm, GameCreateForm
@@ -121,6 +120,45 @@ class PlayerLoginView(LoginView):
 
 class PlayerLogoutView(LogoutView):
     next_page = reverse_lazy('main:index')
+
+
+def player_search(request, game_pk: int):
+    query = request.GET.get("query", "")
+    game = get_object_or_404(Game, pk=game_pk)
+
+    if query:
+        players = Player.objects.filter(
+            Q(username__icontains=query) |
+            Q(first_name__icontains=query) |
+            Q(last_name__icontains=query)
+        )[:20]
+
+    return render(
+        request,
+        "main/partials/player_search_results.html",
+        {
+            "players": players,
+            'game': game
+        }
+    )
+
+
+def add_player_to_game(request, game_pk: int, player_pk: int):
+    game = get_object_or_404(Game, pk=game_pk)
+    player = get_object_or_404(Player, pk=player_pk)
+
+    game.players.add(player)
+
+    return redirect('main:game_detail', pk=game_pk)
+
+
+def remove_player_from_game(request, game_pk: int, player_pk: int):
+    game = get_object_or_404(Game, pk=game_pk)
+    player = get_object_or_404(Player, pk=player_pk)
+
+    game.players.remove(player)
+    
+    return redirect('main:game_detail', pk=game_pk)
 
 
 def game_teams(request, pk: int):

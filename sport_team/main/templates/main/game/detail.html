@@ -3,22 +3,22 @@
 {% block title %}Гра {{ game.pk }}{% endblock %}
 {% block content %}
 <p><span class="fw-bold">
-    Місце:
+        Місце:
     </span>
     {{ game.place }}
 </p>
 <p><span class="fw-bold">
-    Дата:
+        Дата:
     </span>
     {{ game.starts_at|date:"d.m.Y" }}
 </p>
 <p><span class="fw-bold">
-    Час:
+        Час:
     </span>
     {{ game.starts_at|date:"H:i" }}
 </p>
 <p><span class="fw-bold">
-    Організатор:
+        Організатор:
     </span>
     <a href="{% url 'main:player' pk=game.organizer.pk %}" class="text-decoration-none">{{ game.organizer }}</a>
 </p>
@@ -26,7 +26,18 @@
 <div class="list-group">
     {% for player in game.players.all %}
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
-        {% include "main/player_card.html" %}
+        <div class="d-flex align-items-center">
+            <a href="{% url 'main:player' pk=player.pk %}" class="list-group-item list-group-item-action">
+            {% include "main/player_card.html" %}
+            </a>
+
+            {% if game.organizer.pk == user.pk %}
+            <form method="post" action="{% url 'main:game_remove_player' game.pk player.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger m-2">✕</button>
+            </form>
+            {% endif %}
+        </div>
     </div>
     {% endfor %}
 </div>
@@ -35,10 +46,44 @@
     <a class="btn btn-primary" href="{% url 'main:game_edit' pk=game.pk %}">
         Змінити дані
     </a>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
+        Додати гравця
+    </button>
     {% endif %}
     <a class="btn btn-success" href="{% url 'main:game_teams' pk=game.pk %}">
         Команди
     </a>
 </div>
 
+<!-- Модальне вікно -->
+<div class="modal fade" id="addPlayerModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Пошук гравця</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="query"
+                    placeholder="Введіть ім'я..."
+                    hx-get="{% url 'main:player_search' game_pk=game.pk %}"
+                    hx-trigger="keyup changed delay:300ms"
+                    hx-target="#search-results">
+
+                <div id="search-results" class="mt-3">
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}
