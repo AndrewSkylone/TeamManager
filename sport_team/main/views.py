@@ -139,7 +139,7 @@ def game_teams(request, pk: int):
             if len(players) >= max_players_in_team:
                 continue
 
-            rating = sum(p.average_rating for p in players) if players else 0
+            rating = sum(p.average_rating or 0 for p in players) if players else 0
             if min_rating is None or rating < min_rating:
                 team_i = i
                 min_rating = rating
