@@ -22,6 +22,19 @@
     </span>
     <a href="{% url 'main:player' pk=game.organizer.pk %}" class="text-decoration-none">{{ game.organizer }}</a>
 </p>
+<div>
+    {% if game.organizer.pk == user.pk %}
+    <a class="btn btn-primary" href="{% url 'main:game_edit' pk=game.pk %}">
+        Змінити дані
+    </a>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
+        Додати гравця
+    </button>
+    {% endif %}
+    <a class="btn btn-success" href="{% url 'main:game_teams' pk=game.pk %}">
+        Команди
+    </a>
+</div>
 <h2>Гравці</h2>
 <div class="list-group">
     {% for player in game.players.all %}
@@ -40,19 +53,6 @@
         </div>
     </div>
     {% endfor %}
-</div>
-<div>
-    {% if game.organizer.pk == user.pk %}
-    <a class="btn btn-primary" href="{% url 'main:game_edit' pk=game.pk %}">
-        Змінити дані
-    </a>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
-        Додати гравця
-    </button>
-    {% endif %}
-    <a class="btn btn-success" href="{% url 'main:game_teams' pk=game.pk %}">
-        Команди
-    </a>
 </div>
 
 <!-- Модальне вікно -->
