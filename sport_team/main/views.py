@@ -43,7 +43,7 @@ class GameCreateView(LoginRequiredMixin, CreateView):
         )
     
 
-class GameDetailView(DetailView):
+class GameDetailView(DetailView, LoginRequiredMixin):
     model = Game
     template_name = 'main/game/detail.html'
 
@@ -154,7 +154,6 @@ def game_teams(request, pk: int):
 def profile(request):
     return render(request, 'main/profile/profile.html')
 
-@login_required
 def players(request):
     players = Player.objects.all()
     context = {'players': players}
@@ -192,7 +191,6 @@ def player(request, pk: int):
     context = {'player': player, 'rating_form': form}
     return render(request, 'main/player.html', context=context)
 
-@login_required
 def index(request):
     # user_games = Game.objects.filter(
     #     Q(players=request.user) |
