@@ -9,6 +9,7 @@ class GameCreateForm(forms.ModelForm):
         exclude = (
             'organizer',
             'created_at',
+            'players'
         )
 
 
@@ -18,6 +19,7 @@ class GameEditForm(forms.ModelForm):
         exclude = (
             'organizer',
             'created_at',
+            'players'
         )
 
 
