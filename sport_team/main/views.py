@@ -234,8 +234,9 @@ def index(request):
     #     Q(players=request.user) |
     #     Q(organizer=request.user)
     # ).distinct()
-    last_games = Game.objects.filter(starts_at__lt=timezone.now()).order_by('-starts_at')[:5]
-    future_games = Game.objects.filter(starts_at__gt=timezone.now()).order_by('-starts_at')[:5]
+    now = timezone.localtime(timezone.now())
+    last_games = Game.objects.filter(starts_at__lt=now).order_by('-starts_at')[:5]
+    future_games = Game.objects.filter(starts_at__gt=now).order_by('-starts_at')[:5]
 
     context = {'future_games': future_games, 'last_games': last_games}
     return render(request, 'main/index.html', context)
