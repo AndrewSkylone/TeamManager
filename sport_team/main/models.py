@@ -78,6 +78,7 @@ class Player(AbstractUser):
     first_name = models.CharField(max_length=50, verbose_name="Ім'я", blank=True)
     last_name = models.CharField(max_length=50, verbose_name="Прізвище", blank=True)
     username = models.CharField(max_length=150, unique=True, verbose_name="Логін")
+    about_me = models.TextField(verbose_name='Про себе', blank=True)
 
     class Meta(AbstractUser.Meta):
         verbose_name = 'Гравець'

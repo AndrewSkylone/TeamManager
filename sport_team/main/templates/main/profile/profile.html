@@ -27,19 +27,32 @@
                 {{ user.pk }}
             </div>
 
+            {% if user.first_name %}
             <div class="col-4 fw-bold mt-2">
                 Ім'я:
             </div>
             <div class="col-8 mt-2">
                 {{ user.first_name }}
             </div>
+            {% endif %}
 
+            {% if user.last_name %}
             <div class="col-4 fw-bold mt-2">
                 Прізвище:
             </div>
             <div class="col-8 mt-2">
                 {{ user.last_name }}
             </div>
+            {% endif %}
+
+            {% if user.about_me %}
+            <div class="col-4 fw-bold mt-2">
+                Про мене:
+            </div>
+            <div class="col-8 mt-2">
+                {{ user.about_me }}
+            </div>
+            {% endif %}
         </div>
 
     </div>
