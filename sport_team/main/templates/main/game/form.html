@@ -1,8 +1,13 @@
 {% extends 'layout/basic.html' %}
 {% load django_bootstrap5 %}
-{% block title %}Створення гри{% endblock %}
+{% block title %}Гра{% endblock %}
 {% block content %}
+
+{% if object %}
+<h2>Зміна даних гри</h2>
+{% else %}
 <h2>Створення гри</h2>
+{% endif %}
 <form method="post">
     {% csrf_token %}
     {% bootstrap_form form layout='horizontal' %}
