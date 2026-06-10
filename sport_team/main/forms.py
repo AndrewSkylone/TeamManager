@@ -11,6 +11,11 @@ class GameCreateForm(forms.ModelForm):
             'created_at',
             'players'
         )
+        widgets = {
+            "starts_at": forms.DateTimeInput(
+                attrs={"type": "datetime-local"}
+            )
+        }
 
 
 class GameEditForm(forms.ModelForm):
@@ -21,6 +26,11 @@ class GameEditForm(forms.ModelForm):
             'created_at',
             'players'
         )
+        widgets = {
+            "starts_at": forms.DateTimeInput(
+                attrs={"type": "datetime-local"}
+            )
+        }
 
 
 class RegisterForm(forms.ModelForm):
