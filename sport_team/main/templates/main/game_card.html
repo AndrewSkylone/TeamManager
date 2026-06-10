@@ -9,9 +9,7 @@
 
             <small class="text-muted d-block">
                 {{ game.city }}
-                {% if game.starts_at %}
-                    · {{ game.starts_at|date:"d.m.Y H:i" }}
-                {% endif %}
+                · {{ game.starts_at|date:"d.m.Y H:i" }}
             </small>
 
             {% if game.organizer %}

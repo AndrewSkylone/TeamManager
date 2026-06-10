@@ -9,7 +9,7 @@ from PIL import Image, ImageOps
 
 
 class Game(models.Model):
-    starts_at = models.DateTimeField(blank=True, null=True, verbose_name='Початок')
+    starts_at = models.DateTimeField(verbose_name='Дата і час')
     created_at = models.DateTimeField(auto_now_add=True)
     city = models.CharField(max_length=50, blank=True, null=True, verbose_name='Місто')
     place = models.CharField(max_length=100, blank=True, null=True, verbose_name='Місце')
