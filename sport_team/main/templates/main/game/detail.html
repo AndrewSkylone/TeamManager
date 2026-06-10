@@ -73,7 +73,7 @@
                     type="text"
                     class="form-control"
                     name="query"
-                    placeholder="Введіть ім'я..."
+                    placeholder="Введіть логін, ім'я чи прізвище..."
                     hx-get="{% url 'main:player_search' game_pk=game.pk %}"
                     hx-trigger="keyup changed delay:300ms"
                     hx-target="#search-results">
