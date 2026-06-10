@@ -4,13 +4,6 @@ from .models import Player, Game, Team
 
 
 class GameCreateForm(forms.ModelForm):
-    class Meta:
-        model = Game
-        exclude = (
-            'organizer',
-            'created_at',
-            'players'
-        )
     starts_at = forms.SplitDateTimeField(
         label='Дата і час',
         widget=forms.SplitDateTimeWidget(
@@ -19,6 +12,14 @@ class GameCreateForm(forms.ModelForm):
             time_attrs={"type": "time"},
         )
     )
+    
+    class Meta:
+        model = Game
+        exclude = (
+            'organizer',
+            'created_at',
+            'players'
+        )
 
 
 
