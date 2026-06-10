@@ -54,9 +54,9 @@
         {% if player.rating_count %}
         <div class="text-center mt-3">
             <span style="font-weight: bold; font-size: large;">{{ player.avg_rating|floatformat:1 }} ⭐</span>
-            <div>
+            <span>
                 ({{ player.rating_count }} оцінок)
-            </div>
+            </span>
         </div>
         {% else %}
         <div class="text-center mt-3">
