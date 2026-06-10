@@ -1,55 +1,14 @@
-{% extends 'layout/basic.html' %}
-{% load django_bootstrap5 %}
+{% extends 'main/player_basic.html' %}
 {% block title %}Профіль користувача{% endblock %}
-{% block content %}
-<div class="card shadow-sm mx-auto" style="max-width: 500px;">
-    <div class="card-body text-center">
+{% block extra_content %}
+<div class="row text-start mt-3">
+    <form method="post" id="my_form">
+        {% csrf_token %}
+        {{ rating_form.rating }}
 
-        <img src="{{ player.avatar.url }}"
-             class="rounded-circle mb-3"
-             width="200"
-             height="200"
-             alt="Аватар">
-
-        <h3 class="card-title mb-0">
-            {{ player.username }}
-        </h3>
-
-        <p class="text-muted mb-4">
-            Профіль користувача
-        </p>
-
-        <div class="row text-start">
-            <div class="col-4 fw-bold">
-                ID:
-            </div>
-            <div class="col-8">
-                {{ player.pk }}
-            </div>
-
-            <div class="col-4 fw-bold mt-2">
-                Ім'я:
-            </div>
-            <div class="col-8 mt-2">
-                {{ player.first_name }}
-            </div>
-
-            <div class="col-4 fw-bold mt-2">
-                Прізвище:
-            </div>
-            <div class="col-8 mt-2">
-                {{ player.last_name }}
-            </div>
-            <form method="post" id="my_form">
-                {% csrf_token %}
-            
-                {{ rating_form.rating }}
-            
-                <button type="submit" class="btn btn-primary">
-                    Оцінити
-                </button>
-            </form>
-        </div>
-    </div>
+        <button type="submit" class="btn btn-primary">
+            Оцінити
+        </button>
+    </form>
 </div>
 {% endblock %}

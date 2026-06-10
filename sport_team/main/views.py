@@ -190,7 +190,8 @@ def game_teams(request, pk: int):
 
 @login_required
 def profile(request):
-    return render(request, 'main/profile/profile.html')
+    context = {'player': request.user}
+    return render(request, 'main/profile/profile.html', context=context)
 
 def players(request):
     players = Player.objects.all()

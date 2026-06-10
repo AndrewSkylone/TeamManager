@@ -1,6 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import AbstractUser
-from django.db.models import Avg
+from django.db.models import Avg, Count
 from django.conf import settings
 from django.db import models
 from pathlib import Path
@@ -90,6 +90,14 @@ class Player(AbstractUser):
         )
 
         return result['avg']
+
+    @property
+    def rating_count(self) -> Optional[float]:
+        result = self.received_ratings.aggregate(
+            count=Count('rating')
+        )
+
+        return result['count']
     
     def save(self, *args, **kwargs):
         if not self.avatar:
