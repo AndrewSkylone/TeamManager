@@ -44,16 +44,28 @@
         </div>
         {% endif %}
 
-        <div class="text-center mt-3">
+        <!-- <div class="text-center mt-3">
             {% if player.rating_count %}
             ⭐ {{ player.avg_rating|floatformat:1 }} / 10 ({{ player.rating_count }} оцінок)
             {% else %}
             Рейтинг відсутній
             {% endif %}
-
-            {% block extra_content %}
-            {% endblock %}
+        </div> -->
+        {% if player.rating_count %}
+        <div class="text-center mt-3">
+            <span style="font-weight: bold; font-size: large;">{{ player.avg_rating|floatformat:1 }} ⭐</span>
+            <div>
+                ({{ player.rating_count }} оцінок)
+            </div>
         </div>
+        {% else %}
+        <div class="text-center mt-3">
+            Рейтинг відсутній
+        </div>
+        {% endif %}
+
+        {% block extra_content %}
+        {% endblock %}
     </div>
 </div>
 {% endblock %}
