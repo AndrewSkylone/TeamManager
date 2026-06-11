@@ -13,14 +13,16 @@
     {% bootstrap_javascript %}
 </head>
 
-<body class="d-flex justify-content-center align-items-center min-vh-100">
-    <div class="col-lg-4">
-<h2>Реєстрація нового користувача</h2>
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
-    {% bootstrap_button 'Зареєструватися' %}
-</form>
+<body class="container-fluid">
+    <h2 class="text-center m-5">Реєстрація нового користувача</h2>
+    <div class="mx-auto" style="max-width:700px;">
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            {% bootstrap_button 'Зареєструватися' %}
+        </form>
+    </div>
     </div>
 </body>
+
 </html>

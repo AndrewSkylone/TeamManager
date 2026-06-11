@@ -26,10 +26,7 @@ class GameCreateForm(forms.ModelForm):
 class RegisterForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ('username', 'password', 'first_name', 'last_name', 'about_me')
-        widgets = {
-            'password': forms.PasswordInput()
-        }
+        fields = ('username', 'password', 'first_name', 'last_name', 'avatar', 'about_me')
 
 
 class ProfileEditForm(forms.ModelForm):
