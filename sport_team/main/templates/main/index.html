@@ -1,6 +1,7 @@
 {% extends 'layout/basic.html' %}
 
 {% block content %}
+<div class="mb-5">
 {% if future_games %}
 <h1>Заплановані ігри</h1>
 <div class="list-group mb-5 col-lg-4">
@@ -11,6 +12,7 @@
 {% else %}
 <h1>Заплановані ігри: 0</h1>
 {% endif %}
+</div>
 {% if last_games %}
 <h1>Зіграні ігри</h1>
 <div class="list-group col-lg-4">
