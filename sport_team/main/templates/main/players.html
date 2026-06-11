@@ -2,9 +2,9 @@
 {% load django_bootstrap5 %}
 {% block title %}Всі гравці{% endblock %}
 {% block content %}
-<div class="list-group">
+<div class="list-group" style="max-width: max-content;">
     {% for player in players %}
-    <div class="col-md-6 col-lg-2 mb-2">
+    <div class="mb-2" >
         <a href="{% url 'main:player' pk=player.pk %}" class="list-group-item list-group-item-action">
         {% include "main/player_card.html" %}
         </a>

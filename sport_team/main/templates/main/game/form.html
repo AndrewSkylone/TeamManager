@@ -2,15 +2,16 @@
 {% load django_bootstrap5 %}
 {% block title %}Гра{% endblock %}
 {% block content %}
-
 {% if object %}
-<h2>Зміна даних гри</h2>
+<h2 class="text-center m-5">Зміна даних гри</h2>
 {% else %}
-<h2>Створення гри</h2>
+<h2 class="text-center m-5">Створення гри</h2>
 {% endif %}
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form layout='horizontal' %}
-    {% bootstrap_button 'Зберегти' %}
-</form>
+<div class="mx-auto" style="max-width:700px;">
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        {% bootstrap_button 'Зберегти' %}
+    </form>
+</div>
 {% endblock %}

@@ -204,7 +204,7 @@ def player(request, pk: int):
     if player == request.user:
         return redirect('main:profile')
     
-    existing = PlayerRating.objects.filter(
+    existing_player_rating = PlayerRating.objects.filter(
         from_player=request.user,
         to_player=player
     ).first()
@@ -224,7 +224,7 @@ def player(request, pk: int):
         else:
             messages.error(request=request, message='Помилка збереження')
     else:
-        initial = {} if not existing else {'rating': existing.rating}
+        initial = {} if not existing_player_rating else {'rating': existing_player_rating.rating}
         form = PlayerRatingForm(initial=initial)
 
     context = {'player': player, 'rating_form': form}
